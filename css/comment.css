@@ -1,0 +1,6 @@
+.comment #myTab li{
+  list-style: none;
+}
+.table .comment-delete:hover{
+  color: red;
+}

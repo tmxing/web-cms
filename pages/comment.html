@@ -1,0 +1,148 @@
+  <div class="comment">
+    <ul class="nav nav-tabs" id="myTab" role="tablist">
+      <li class="nav-item">
+        <a class="nav-link active" id="home-tab" data-toggle="tab" href="#comment-set" role="tab" aria-controls="home" aria-selected="true">评论设置</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" id="profile-tab" data-toggle="tab" href="#comment-list" role="tab" aria-controls="profile" aria-selected="false">评论列表</a>
+      </li>
+    </ul>
+    <div class="tab-content" id="myTabContent">
+      <div class="tab-pane fade show active" id="comment-set" role="tabpanel" aria-labelledby="home-tab">
+        <table class="table  text-center" style="border-top: none;">
+          <thead class="font-weight-bold">
+            <tr>
+              <th>编号</th>
+              <th>文章标题</th>
+              <th>所属栏目</th>
+              <th>作者</th>
+              <th>发布时间</th>
+              <th>阅读次数</th>
+              <th>评论状态</th>
+            </tr>
+          </thead>
+          <tbody id="commentSet">
+          </tbody>
+        </table>
+        <!-- 分页 -->
+        <div id="myPage1" class="demo"></div>
+      </div>
+      <div class="tab-pane fade" id="comment-list" role="tabpanel" aria-labelledby="profile-tab">
+        <table class="table  text-center" >
+          <thead class="font-weight-bold">
+            <tr>
+              <th>编号</th>
+              <th>所属文章</th>
+              <th>评论内容</th>
+              <th>评论者</th>
+              <th>评论时间</th>
+              <th>状态</th>
+              <th>操作</th>
+            </tr>
+          </thead>
+          <tbody id="commentList">
+          </tbody>
+        </table>
+
+        <!-- 分页 -->
+        <div id="myPage1" class="demo"></div>
+      </div>
+    </div>
+  </div>
+<script>
+  findAllComment(0);
+  function findAllComment(page){
+    myAjax('/manager/comment/findComment','get',{page:page,pageSize:10},function(res){
+      $('tbody').empty();
+      var newData = [];
+      // 根据当前评论的栏目id 进行所有栏目查询 并过滤
+      res.data.list.forEach(function(item){
+        if(item.article){
+          myAjax('/manager/category/findAllCategory','get',{},function(res){
+            item.categoryName = res.data.filter(function(it){
+              return it.id == item.article.categoryId;
+            })[0].name
+          });
+        }
+        newData.push(item);
+
+      })
+      console.log(newData)
+      // 评论设置
+      newData.forEach(function(item){
+        // 评论设置
+        setTimeout(function(){
+          var newTr = $(`
+            <tr>
+              <td><input type="checkbox" value="`+item.id+`"></td>
+              <td>`+(item.article?item.article.title:'/')+`</td>
+              <td>`+(item.article?item.categoryName:'/')+`</td>
+              <td>`+(item.customer?item.customer.nickname:'/')+`</td>
+              <td>`+(item.article?item.article.publishtime:'/')+`</td>
+              <td>`+(item.article?item.article.readtimes:'/')+`</td>
+              <td>
+                <div>`+(item.status =='审核通过'? item.status:'<buttton class="btn btn-info passBtn">审核</button>')+`</div>
+              </td>
+              
+            </tr>
+          `)
+          
+          $('#commentSet').append(newTr);
+        },400);
+        setTimeout(function(){
+          console.log('say')
+            // 评论列表
+          var newTr = $(`
+            <tr>
+              <td><input type="checkbox" value="`+item.id+`"></td>
+              <td>`+(item.article?item.article.title:'/')+`</td>
+              <td>`+item.content+`</td>
+              <td>`+(item.customer?item.customer.nickname:'/')+`</td>
+              <td>`+item.commenttime+`</td>
+              <td>
+                <div>`+(item.status =='审核通过'? item.status:'<buttton class="btn btn-info passBtn">审核</button>')+`</div>
+                  </td>
+              <td>
+                <span><i class="iconfont icon-shanchu comment-delete" style="font-size:24px;" title="删除"></i></span>
+              </td>
+            </tr>
+          `)
+          $('#commentList').append(newTr);
+        },400);
+      })
+      // 分页
+      $("#myPage1").sPage({
+      page:res.data.page+1,
+      pageSize:res.data.pageSize,
+      total:res.data.total,
+      prevPage:"←",
+      nextPage:"→",
+      backFun:function(page){
+          // page为当前点击的页码
+          findAllComment(page-1);
+      }
+    });
+    });
+  }
+
+  // 审核
+  $('.table').on('click','.passBtn',function(){
+    var id = $(this).closest('tr').find('input').val();
+    myAjax('/manager/comment/checkComment','get',{id:id,status:'审核通过'},function(res){
+      if(res.status == 200)
+        findAllComment(0);
+    })
+  });
+
+  // 删除评论
+  $('.table').on('click','.comment-delete',function(){
+    var id = $(this).closest('tr').find('input').val();
+    myAjax('/manager/comment/deleteCommentById','get',{id:id},function(res){
+      if(res.status == 200){
+        alert('删除评论成功');
+        findAllComment(0);
+      }
+    });
+  });
+
+</script>

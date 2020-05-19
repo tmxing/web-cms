@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>看点资讯精选</title>
+  <link rel="stylesheet" href="./css/iconfont.css">
+  <link rel="stylesheet" href="./css/index.css">
+  <link rel="stylesheet" href="./css/category.css">
+  <link rel="stylesheet" href="./css/article.css">
+  <link rel="stylesheet" href="./css/user.css">
+  <link rel="stylesheet" href="./css/comment.css">
+
+  <!-- 树形结构css -->
+  <link rel="stylesheet" href="./css/zTree_v3/css/demo.css">
+  <link rel="stylesheet" href="./css/zTree_v3/css/zTreeStyle/zTreeStyle.css">
+  <!-- 分页插件的样式 -->
+  <link rel="stylesheet" href="./css/jquery.sPage.css">
+  <!-- 图片上传样式 -->
+  <link rel="stylesheet" href="./css/FraUpload.css">
+  <!-- 日期选择器插件样式 -->
+  <link rel="stylesheet" href="http://www.jq22.com/jquery/font-awesome.4.6.0.css">
+  <link rel="stylesheet" href="./css/foundation-datepicker.css">
+
+  <!-- BootStrap的css -->
+  <link href="https://cdn.bootcdn.net/ajax/libs/twitter-bootstrap/4.4.1/css/bootstrap.min.css" rel="stylesheet">
+  <!-- 引入jQuery -->
+  <script src="https://cdn.bootcdn.net/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <!-- 引入bootstrap  js -->
+  <script src="https://cdn.bootcdn.net/ajax/libs/twitter-bootstrap/4.4.1/js/bootstrap.min.js"></script>
+  <!-- 树形结构js -->
+  <script src="./css/zTree_v3/js/jquery.ztree.core.min.js"></script>
+  <!-- 引入分页插件的js -->
+  <script src="./js/jquery.sPage.js"></script>
+  <!-- 引入时间插件js -->
+  <script src="https://cdn.bootcdn.net/ajax/libs/moment.js/2.25.3/moment.min.js"></script>
+  <!-- 引入富文本编辑器 -->
+  <script src="./js/Editor.js"></script>
+  <!-- 图片上传插件 -->
+  <script src="./js/FraUpload.js"></script>
+  <script src="./js/MD5.js"></script>
+  <script src="./js/Sortable/Sortable.js"></script>
+  <!-- echars文件 -->
+  <script src="https://cdn.bootcdn.net/ajax/libs/echarts/4.7.0/echarts.min.js"></script>
+  <!-- 日期选择器插件 -->
+  <script src="./js/foundation-datepicker.js"></script>
+  
+  <script src="./js/index.js"></script>
+  <script src="./js/ajax.js"></script>
+  <script>
+    $(function(){
+      // 获取登录用户的令牌
+      var token = localStorage.getItem('token');
+      myAjax('/manager/user/info','get',{token:token},function(res){
+        localStorage.setItem('userId',res.data.id);
+        // 设置用户头像
+        $('#userphoto').prop('src',res.data.userface);
+      });
+
+      $('#logOut').click(function(){
+        localStorage.removeItem('token');
+        localStorage.removeItem('userId')
+        location.href = 'http://119.23.181.103:8099/project-cms/login.html';
+      });
+
+    });
+  </script>
+</head>
+<body>
+  <div class="wrapper">
+    <!-- 页面左侧 -->
+    <div class="left">
+      <div class="left-header">
+        <img src="./images/logo.png" alt="">
+        <span>看点咨询</span>
+      </div>
+      <div class="left-nav">
+        <ul>
+          <li><i class="iconfont icon-shouye"></i>首页</li>
+          <li><i class="iconfont icon-lanmu"></i>栏目管理</li>
+          <li><i class="iconfont icon-wenzhang"></i>文章管理</li>
+          <li><i class="iconfont icon-yonghu"></i>用户管理</li>
+          <li><i class="iconfont icon-pinglun"></i>评论管理</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- 页面右侧 -->
+    <div class="right">
+      <div class="right-header">
+        <button class="btn btn-outline-success" id="logOut">退出</button>
+        <img id="userphoto"  src="./images/user.png" alt="">
+      </div>
+      <div class="right-content"></div>
+    </div>
+
+  </div>
+</body>
+</html>

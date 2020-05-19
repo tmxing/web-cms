@@ -1,0 +1,28 @@
+.category{
+  height: 100%;
+}
+.category-tree{
+  width: 160px ;
+  float: left;
+}
+#category-tree{
+  width: 100%;
+  border: none;
+  background-color: #fff;
+}
+#category-tree li span{
+  font-size: 16px;   /*将树形结构中的文字调大*/
+}
+.category-content{
+  height: 100%;
+  width: 85%;
+  float: right;
+  overflow: auto;
+}
+.category-option button{
+  margin-bottom:10px;
+  margin-right: 10px;
+}
+.category-tree ul.ztree{
+  overflow-y: hidden;
+}

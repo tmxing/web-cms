@@ -1,0 +1,31 @@
+.user #myTab li{
+  list-style: none;
+}
+.nav-item a{
+  font-size: 16px;
+  text-decoration: none;
+}
+.list-group-item div{
+  display: inline-block;
+  margin-right:10px;
+}
+.list-group-item span{
+  margin-right: 10px;
+}
+/* .usercontent{
+  height: 50%;
+  width: 100%;
+  overflow: hidden;
+} */
+.return{
+  display: inline-block;
+}
+#admin,#editor,#user{
+  margin: 0;
+  padding: 0;
+  border: none;
+}
+.user-delete:hover,
+.user-edit:hover{
+  color: rgb(100, 177, 224);
+}

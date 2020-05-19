@@ -1,0 +1,80 @@
+.article-option .btn-left button{
+  margin-bottom: 10px;
+}
+.btn-left{
+  float: left;
+}
+.btn-right{
+  width: 700px;
+  float: right;
+}
+.article{
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+}
+.btn-right *{
+  margin-bottom: 10px;
+}
+.btn-right input{
+display: inline-block;
+  border-radius: 5px;
+  width: 120px;
+}
+.btn-right button{
+  margin-right: 10px;
+}
+#keywords{
+  width: 150px;
+  margin: 0 10px;
+}
+
+/* 富文本编辑器头部样式 */
+.w-e-toolbar li{
+  list-style: none;
+}
+@keyframes photo{
+  0% {
+    width: 0;
+    height:  0;
+  }
+  50%{
+    width: 200px;
+    height:  200px;
+  }
+  100%{
+    width: 400px;
+    height:  400px;
+  }
+}
+@keyframes photout{
+  0% {
+    width: 200px;
+    height:  200px;
+    
+  }
+  50%{
+    width: 100px;
+    height:  100px;
+  }
+  100%{
+    width: 0;
+    height:  0;
+  }
+}
+.showPhoto{
+  display: none;
+  width: 400px;
+  height: 400px;
+  position: absolute;
+  top: 200px;
+  right:650px;
+  opacity: .9;
+  animation-duration: 2000ms;
+  animation-name: photo;
+  animation-direction: normal;
+  animation-fill-mode: forwards;
+}
+
+
+
