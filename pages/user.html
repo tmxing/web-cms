@@ -88,7 +88,6 @@
 <script>
     // 用于区分是修改 还是新增
     var id;
-
     var imgUrl;
     // 商品图片上传
     a = $("#upload_duixiang").FraUpload({
@@ -101,6 +100,7 @@
             console.log("外部: 初始化完成...");
         },
         breforePort: function (e) {         // 发送前触发
+            // $('.FraUpload_imglist').empty();
             console.log("文件发送之前触发");
         },  
         successPort: function (e) {         // 发送成功触发
@@ -135,6 +135,7 @@
         }
         $("#imagepath").val(ids);
         imgUrl = 'http://134.175.100.63:8686/group1/' + res[0].ajax.data.id
+        console.log(res[0].ajax.data.id)
     }
     // 判断变量是否为空
     function empty(value) {
@@ -157,7 +158,7 @@
       $('#repassword').val('');
 
       $('#email').val('');
-      $('.FraUpload_imglist').empty();
+      // $('.FraUpload_imglist').empty();
       var addBtnRole = $(this).closest('div').prop('id');
       // console.log(addBtnRole)
       $('#role').val(addBtnRole);
@@ -175,6 +176,7 @@
       var obj;
       if(password == repassword){
         if(id){
+          // console.log(imgUrl)
           obj = {
             id:id,
             username:username,
@@ -195,7 +197,6 @@
                 $('#userModal').modal('hide');
               }
           })
-
         }else{
           // 新增
           obj = {
@@ -251,7 +252,6 @@
   
     // 修改
     $('#myTabContent').on('click','.user-edit',function(){
-      $('.FraUpload_imglist').empty();
       id = $(this).closest('ul').find('input').val();
       myAjax('/manager/user/findUserById','get',{id:id},function(res){
         console.log(res)
@@ -263,9 +263,9 @@
         $('#repassword').closest('div').css('display','none')
         $('#email').val(res.data.email);
         $('#role').val(res.data.role);
-        $('.FraUpload_imglist').append('<img style="height:200px;" src='+res.data.userface+'>');
+        // $('.FraUpload_imglist').append('<img style="height:200px;" src='+res.data.userface+'>');
         $('#userModal').modal('show');
-
+        console.log(imgUrl,'---')
       });
     });
 
@@ -395,10 +395,10 @@
     });
 
     // 当对图片进行修改，即重新上传张新的时，就将原来显示图片的内容清空
-    $('#upload_duixiang').click(function(){
-      $('.FraUpload_imglist').empty();
-      // imgUrl = null;
-    });
+    // $('#upload_duixiang').click(function(){
+    //   $('.FraUpload_imglist').empty();
+    //   imgUrl = null;
+    // });
 
     // 点击 返回
     $('#return').click(function(){
@@ -407,8 +407,8 @@
       $('#password').val('');
       $('#repassword').val('');
       $('#email').val('');
-      $('.FraUpload_imglist').empty();
-      imgUrl = null;
+      // $('.FraUpload_imglist').empty();
+      // imgUrl = null;
       $('#userModal').modal('hide');
     });
     // 正常 禁言

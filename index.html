@@ -48,18 +48,17 @@
   <script src="./js/ajax.js"></script>
   <script>
     $(function(){
-      // 获取登录用户的令牌
       var token = localStorage.getItem('token');
       myAjax('/manager/user/info','get',{token:token},function(res){
-        localStorage.setItem('userId',res.data.id);
-        // 设置用户头像
-        $('#userphoto').prop('src',res.data.userface);
+          localStorage.setItem('userId',res.data.id);
+          // 设置用户头像
+          $('#userphoto').prop('src',res.data.userface);
       });
 
       $('#logOut').click(function(){
         localStorage.removeItem('token');
         localStorage.removeItem('userId')
-        location.href = 'http://119.23.181.103:8099/project-cms/login.html';
+        location.href = 'http://127.0.0.1:5500/learnWebUI/project-cms/login.html';
       });
 
     });
